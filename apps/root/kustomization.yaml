@@ -1,0 +1,8 @@
+resources:
+  - ../kyverno/application.yaml
+  - ../ingress-nginx/application.yaml
+  - ../cert-manager/application.yaml
+  - ../external-dns/application.yaml
+  - ../external-secrets/application.yaml
+  - ../argo-rollouts/application.yaml
+  - ../observability/application.yaml
