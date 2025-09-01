@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../projects/platform.yaml
+  - ../../projects/services.yaml
+
+  # Platform apps
+  - ../../apps/platform/ingress-nginx/application.yaml
+  - ../../apps/platform/cert-manager/application.yaml
+  - ../../apps/platform/external-dns/application.yaml
+  - ../../apps/platform/monitoring/kube-prometheus-stack/application.yaml
+
+  # Services (can point at prod overlays or prod values)
+  - ../../apps/services/currency-exchange/application.yaml
+patches:
+  - target:
+      kind: Application
+      name: currency-exchange
+    patch: |-
+      - op: replace
+        path: /spec/source/helm/valueFiles/0
+        value: values-dev.yaml

@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: currency-exchange
+  namespace: argocd
+spec:
+  project: services
+  destination:
+    name: in-cluster
+    namespace: currency-exchange
+  source:
+    repoURL: https://github.com/KiemaKennedy/currency-exchange-microservice.git
+    path: Dockerfile          # or ./k8s manifests; use what your repo has
+    targetRevision: main
+    helm:
+      releaseName: currency-exchange
+      valueFiles:
+        - values-dev.yaml     # switch to values-prod.yaml in prod kustomization
+  syncPolicy:
+    automated: { prune: true, selfHeal: true }
+    syncOptions: ["CreateNamespace=true"]
