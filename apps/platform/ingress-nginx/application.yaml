@@ -4,7 +4,7 @@ metadata:
   name: ingress-nginx
   namespace: argocd
 spec:
-  project: platform
+  project: default
   destination:
     name: in-cluster
     namespace: ingress-nginx
