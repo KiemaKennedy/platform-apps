@@ -3,8 +3,8 @@
 replicaCount: 1
 
 image:
-  repository: kennedy109/currency-exchange-devops   # <-- your Docker Hub repo
-  tag: "1.0.0"                                      # <-- or "latest" / CI tag
+  repository: kennedy109/currency-exchange-service   # <-- your Docker Hub repo
+  tag: "0.0.1.RELEASE"                                      # <-- or "latest" / CI tag
   pullPolicy: IfNotPresent
 
 # If your Deployment maps containerPort from service.port, set this once:
@@ -15,78 +15,3 @@ service:
 # If your templates expect an explicit containerPort, keep this; otherwise omit.
 containerPort: 8000
 
-# Common env for Spring Boot-style services (adjust as needed)
-env:
-  - name: SPRING_PROFILES_ACTIVE
-    value: dev
-  - name: SERVER_PORT
-    value: "8000"
-  # Example: DB creds from a Secret created separately (External Secrets / kubectl).
-  - name: DB_URL
-    valueFrom:
-      secretKeyRef:
-        name: currency-exchange-dev
-        key: db_url
-  - name: DB_USERNAME
-    valueFrom:
-      secretKeyRef:
-        name: currency-exchange-dev
-        key: db_user
-  - name: DB_PASSWORD
-    valueFrom:
-      secretKeyRef:
-        name: currency-exchange-dev
-        key: db_password
-
-# Optional Ingress (disable if you haven’t installed an ingress controller yet)
-ingress:
-  enabled: false
-  className: nginx
-  annotations: {}
-  hosts:
-    - host: currency-exchange.dev.example.com       # <-- set your dev domain
-      paths:
-        - path: /
-          pathType: Prefix
-  tls: []                                           # e.g., add secretName + hosts when certs ready
-
-# Probes (if you use Spring Actuator). If not, switch paths to "/" or disable.
-livenessProbe:
-  enabled: true
-  httpGet:
-    path: /actuator/health/liveness
-    port: http
-  initialDelaySeconds: 30
-  periodSeconds: 10
-readinessProbe:
-  enabled: true
-  httpGet:
-    path: /actuator/health/readiness
-    port: http
-  initialDelaySeconds: 10
-  periodSeconds: 5
-
-resources:
-  requests:
-    cpu: 100m
-    memory: 256Mi
-  limits:
-    cpu: 500m
-    memory: 512Mi
-
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 3
-  targetCPUUtilizationPercentage: 70
-  # targetMemoryUtilizationPercentage: 70
-
-# Helpful for Prometheus if you expose /actuator/prometheus
-podAnnotations:
-  prometheus.io/scrape: "true"
-  prometheus.io/path: "/actuator/prometheus"
-  prometheus.io/port: "8000"
-
-nodeSelector: {}
-tolerations: []
-affinity: {}

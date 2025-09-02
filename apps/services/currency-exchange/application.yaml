@@ -10,8 +10,8 @@ spec:
     namespace: currency-exchange
   source:
     repoURL: https://github.com/KiemaKennedy/currency-exchange-microservice.git
-    path: Dockerfile          # or ./k8s manifests; use what your repo has
-    targetRevision: main
+    path: deploy          # or ./k8s manifests; use what your repo has
+    targetRevision: master
     helm:
       releaseName: currency-exchange
       valueFiles:
