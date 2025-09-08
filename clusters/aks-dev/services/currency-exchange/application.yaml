@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/KiemaKennedy/platform-apps.git
     targetRevision: main
-    path: apps/services/currency-exchange
+    path: clusters/aks-dev/services/currency-exchange
     helm:
       releaseName: currency-exchange
       valueFiles: 
