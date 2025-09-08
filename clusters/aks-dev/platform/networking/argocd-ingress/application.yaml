@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/KiemaKennedy/platform-apps.git
     targetRevision: main
-    path: apps/platform/networking/argocd-ingress
+    path: clusters/aks-dev/networking/argocd-ingress
   destination:
     name: in-cluster
     namespace: argocd
