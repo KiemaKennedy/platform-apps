@@ -1,17 +1,6 @@
-# values-dev.yaml — currency-exchange (dev)
-
-replicaCount: 1
-
+replicaCount: 3
 image:
-  repository: kennedy109/currency-exchange-service   # <-- your Docker Hub repo
-  tag: "0.0.1.RELEASE"                                      # <-- or "latest" / CI tag
-  pullPolicy: IfNotPresent
-
-# If your Deployment maps containerPort from service.port, set this once:
-service:
-  type: LoadBalancer                                # For quick dev access; or ClusterIP if using Ingress
-  port: 8000                                        # <-- app listen port
-
-# If your templates expect an explicit containerPort, keep this; otherwise omit.
-containerPort: 8000
-
+  tag: "0.0.1.RELEASE"       # your CI can bump this
+ingress:
+  host: "devcluster-kengw.eastus.cloudapp.azure.com"
+  path: "/currency-exchange"

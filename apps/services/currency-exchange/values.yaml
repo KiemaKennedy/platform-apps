@@ -1,0 +1,17 @@
+replicaCount: 1
+
+image:
+  repository: docker.io/kennedy109/currency-exchange-service
+  tag: "0.0.1.RELEASE"
+  pullPolicy: IfNotPresent
+
+service:
+  port: 8000
+
+ingress:
+  enabled: true
+  host: "devcluster-kengw.eastus.cloudapp.azure.com"
+  path: "/currency-exchange"
+  tls:
+    enabled: false          # set true + secretName when you add cert-manager
+    secretName: ""
