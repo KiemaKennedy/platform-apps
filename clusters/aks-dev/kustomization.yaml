@@ -5,17 +5,17 @@ resources:
   - ./projects/services.yaml
 
   # dev secrets for Grafana
-  - ../../apps/platform/monitoring/secrets/grafana-admin.secret.yaml
-  - ../../apps/platform/monitoring/secrets/grafana-oidc.secret.yaml
+  - ./platform/monitoring/secrets/grafana-admin.secret.yaml
+  - ./platform/monitoring/secrets/grafana-oidc.secret.yaml
 
   # Platform apps
-  - ../../apps/platform/networking/argocd-ingress/application.yaml
-  - ../../apps/platform/cert-manager/application.yaml
-  - ../../apps/platform/monitoring/application.yaml
+  - ./platform/networking/argocd-ingress/application.yaml
+  - ./platform/cert-manager/application.yaml
+  - ./platform/monitoring/application.yaml
 
 
   # Services (can point at prod overlays or prod values)
-  - ../../apps/services/currency-exchange/application.yaml
+  - ./services/currency-exchange/application.yaml
 patches:
   - target:
       kind: Application
