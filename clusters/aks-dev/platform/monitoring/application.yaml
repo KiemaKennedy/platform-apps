@@ -58,7 +58,7 @@ spec:
             enabled: false
   destination:
     name: in-cluster
-    namespace: platform
+    namespace: monitoring
   syncPolicy:
     automated: { prune: true, selfHeal: true }
     syncOptions: [ CreateNamespace=true, ServerSideApply=true ]
