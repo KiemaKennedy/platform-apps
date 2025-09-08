@@ -10,7 +10,7 @@ spec:
     targetRevision: main
     path: clusters/aks-dev
   destination:
-    server: https://kubernetes.default.svc
+    name: https://kubernetes.default.svc
     namespace: argocd
   syncPolicy:
     automated:
