@@ -34,7 +34,7 @@ patches:
     patch: |
       - op: replace
         path: /spec/rules/0/host
-        value: devcluster-gw.eastus.cloudapp.azure.com
+        value: devcluster-kengw.eastus.cloudapp.azure.com
 
   - target: { kind: AppProject, name: services, namespace: argocd }
     patch: |
