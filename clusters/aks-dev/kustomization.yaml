@@ -1,22 +1,22 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ../../projects
-  # - ../../projects/services.yaml
+  - ../../projects/platform.yaml
+  - ../../projects/services.yaml
 
 
   # dev secrets for Grafana
-  # - ../../apps/platform/monitoring/secrets/grafana-admin.secret.yaml
-  - ../../apps/platform/monitoring/secrets
+  - ../../apps/platform/monitoring/secrets/grafana-admin.secret.yaml
+  - ../../apps/platform/monitoring/secrets/grafana-oidc.secret.yaml
 
   # Platform apps
-  - ../../apps/platform/networking/argocd-ingress
-  - ../../apps/platform/cert-manager
-  - ../../apps/platform/monitoring
+  - ../../apps/platform/networking/argocd-ingress/application.yaml
+  - ../../apps/platform/cert-manager/application.yaml
+  - ../../apps/platform/monitoring/application.yaml
 
 
   # Services (can point at prod overlays or prod values)
-  - ../../apps/services/currency-exchange
+  - ../../apps/services/currency-exchange/application.yaml
 patches:
   - target:
       kind: Application
