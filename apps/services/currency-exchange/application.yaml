@@ -4,17 +4,18 @@ metadata:
   name: currency-exchange
   namespace: argocd
 spec:
-  project: default
+  project: services
+  source:
+    repoURL: https://github.com/KiemaKennedy/platform-apps.git
+    targetRevision: main
+    path: apps/services/currency-exchange
+    helm:
+      releaseName: currency-exchange
+      valueFiles: 
+        - values-dev.yaml
   destination:
     name: in-cluster
     namespace: currency-exchange-dev
-  source:
-    repoURL: https://github.com/KiemaKennedy/currency-exchange-microservice.git
-    path: clusters/prod/services/currency-exchange         
-    targetRevision: master
-    helm:
-      releaseName: currency-exchange
-      valueFiles: [ values.yaml ]
   syncPolicy:
     automated: { prune: true, selfHeal: true }
-    syncOptions: ["CreateNamespace=true"]
+    syncOptions: [ "CreateNamespace=true" ]

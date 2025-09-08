@@ -8,7 +8,7 @@ resources:
   # dev secrets for Grafana
   - ../../apps/platform/monitoring/secrets/grafna-admin.secret.yaml
   - ../../apps/platform/monitoring/secrets/grafna-oidc.secret.yaml
-  
+
   # Platform apps
   - ../../apps/platform/networking/argocd-ingress/application.yaml
   - ../../apps/platform/cert-manager/application.yaml
@@ -31,3 +31,9 @@ patches:
       - op: replace
         path: /spec/rules/0/host
         value: devcluster-gw.eastus.cloudapp.azure.com
+
+  - target: { kind: AppProject, name: services, namespace: argocd }
+    patch: |
+      - op: replace
+        path: /spec/destinations/0/namespace
+        value: dev_services

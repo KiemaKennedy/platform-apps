@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: services
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  description: Product/application workloads
+  # Only pull manifests/values from your platform repo (or service repos if you use pattern B)
+  sourceRepos:
+    - https://github.com/KiemaKennedy/platform-apps.git
+  # Lock services to specific namespaces (add more as you grow)
+  destinations:
+    - name: in-cluster
+      namespace: services  # overwritten in kustomize based on environment - dev_services, prod_services
+  # Services shouldn't create cluster-scoped resources
+  clusterResourceWhitelist: []   # default deny for cluster-wide kinds
+  # Optionally block certain namespaced kinds if you want
+  # namespaceResourceBlacklist:
+  #   - group: ""
+  #     kind: ServiceAccount

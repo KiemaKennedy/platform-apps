@@ -11,7 +11,7 @@ metadata:
     # appgw.ingress.kubernetes.io/backend-protocol: "http"   # fits server.insecure=true
 spec:
   rules:
-  - host: devcluster-kengw.eastus.cloudapp.azure.com
+  - host: devcluster-kengw.eastus.cloudapp.azure.com  # overridden in kustomize
     http:
       paths:
       - path: /
