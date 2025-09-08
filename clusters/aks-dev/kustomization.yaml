@@ -1,7 +1,8 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./projects
+  - ./projects/platform.yaml
+  - ./projects/services.yaml
 
   # dev secrets for Grafana
   - ../../apps/platform/monitoring/secrets/grafana-admin.secret.yaml
