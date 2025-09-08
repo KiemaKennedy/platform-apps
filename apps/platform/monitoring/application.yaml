@@ -1,23 +1,64 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
-metadata: { name: observability, namespace: argocd }
+metadata:
+  name: monitoring
+  namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://prometheus-community.github.io/helm-charts
     chart: kube-prometheus-stack
-    targetRevision: 62.7.0           # or a recent version
+    targetRevision: 65.0.0
     helm:
-      releaseName: kube-prom-stack
-      valuesFrom:
-        - kind: Secret
-          name: kps-helm-values
-          valuesKey: values.yaml
+      values: |
+        fullnameOverride: monitoring
+
+        grafana:
+          ## Use a pre-created Secret for admin creds (keys: admin-user, admin-password)
+          ## e.g. via External Secrets from Key Vault.
+          admin:
+            existingSecret: grafana-admin
+            userKey: admin-user
+            passwordKey: admin-password
+
+          ## Load OIDC settings via env (Secret must define GF_* keys)
+          ## e.g., GF_AUTH_GENERIC_OAUTH_CLIENT_ID / _CLIENT_SECRET / _AUTH_URL / _TOKEN_URL / _API_URL
+          envFromSecret: grafana-oidc
+          env:
+            - name: GF_SERVER_ROOT_URL
+              value: "https://devcluster-kengw.eastus.cloudapp.azure.com/grafana"
+            - name: GF_SERVER_SERVE_FROM_SUB_PATH
+              value: "true"
+            - name: GF_AUTH_GENERIC_OAUTH_ENABLED
+              value: "true"
+
+          ## Ingress via AGIC, path-based under one hostname
+          ingress:
+            enabled: true
+            ingressClassName: azure/application-gateway
+            annotations:
+              appgw.ingress.kubernetes.io/backend-path-prefix: "/"
+            hosts:
+              - "devcluster-kengw.eastus.cloudapp.azure.com"
+            path: /grafana
+            pathType: Prefix
+            ## using cert-manager:
+            annotations:
+              cert-manager.io/cluster-issuer: letsencrypt
+            # tls:
+            #   - secretName: grafana-tls
+            #     hosts: [ "devcluster-kengw.eastus.cloudapp.azure.com" ]
+
+        prometheus:
+          ingress:
+            enabled: false
+
+        alertmanager:
+          ingress:
+            enabled: false
   destination:
-    server: https://kubernetes.default.svc
-    namespace: observability
+    name: in-cluster
+    namespace: monitoring
   syncPolicy:
     automated: { prune: true, selfHeal: true }
-    syncOptions:
-      - CreateNamespace=true
-      - ServerSideApply=true
+    syncOptions: [ CreateNamespace=true, ServerSideApply=true ]

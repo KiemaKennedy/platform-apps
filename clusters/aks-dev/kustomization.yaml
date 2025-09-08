@@ -4,11 +4,16 @@ resources:
   - ../../projects/platform.yaml
   - ../../projects/services.yaml
 
+
+  # dev secrets for Grafana
+  - ../../apps/platform/monitoring/secrets/grafna-admin.secret.yaml
+  - ../../apps/platform/monitoring/secrets/grafna-oidc.secret.yaml
+  
   # Platform apps
-  - ../../apps/platform/ingress-nginx/application.yaml
+  - ../../apps/platform/networking/argocd-ingress/application.yaml
   - ../../apps/platform/cert-manager/application.yaml
-  - ../../apps/platform/external-dns/application.yaml
-  - ../../apps/platform/monitoring/kube-prometheus-stack/application.yaml
+  - ../../apps/platform/monitoring/application.yaml
+
 
   # Services (can point at prod overlays or prod values)
   - ../../apps/services/currency-exchange/application.yaml
@@ -20,3 +25,9 @@ patches:
       - op: replace
         path: /spec/source/helm/valueFiles/0
         value: values-dev.yaml
+
+  - target: { kind: Ingress, name: argocd, namespace: argocd }
+    patch: |
+      - op: replace
+        path: /spec/rules/0/host
+        value: devcluster-gw.eastus.cloudapp.azure.com
