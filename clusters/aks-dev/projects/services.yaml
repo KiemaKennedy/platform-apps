@@ -10,6 +10,7 @@ spec:
   # Only pull manifests/values from your platform repo (or service repos if you use pattern B)
   sourceRepos:
     - https://github.com/KiemaKennedy/platform-apps.git
+    - https://github.com/KiemaKennedy/currency-exchange-microservice.git
   # Lock services to specific namespaces (add more as you grow)
   destinations:
     - name: in-cluster

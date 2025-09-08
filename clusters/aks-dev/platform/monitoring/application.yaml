@@ -39,7 +39,7 @@ spec:
             annotations:
               appgw.ingress.kubernetes.io/backend-path-prefix: "/"
             hosts:
-              - "devcluster-kengw.eastus.cloudapp.azure.com"
+              - "https://devcluster-kengw.eastus.cloudapp.azure.com"
             path: /grafana
             pathType: Prefix
             ## using cert-manager:
@@ -47,7 +47,7 @@ spec:
               cert-manager.io/cluster-issuer: letsencrypt
             # tls:
             #   - secretName: grafana-tls
-            #     hosts: [ "devcluster-kengw.eastus.cloudapp.azure.com" ]
+            #     hosts: [ "https://devcluster-kengw.eastus.cloudapp.azure.com" ]
 
         prometheus:
           ingress:
