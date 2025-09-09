@@ -4,6 +4,7 @@ resources:
   
   # Namespaces
   - ./namespaces/monitoring-namespace.yaml
+  - ./namespaces/dev_services.yaml
 
   # Projects
   - ./projects/platform.yaml
