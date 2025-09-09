@@ -15,7 +15,7 @@ spec:
         - values-dev.yaml
   destination:
     name: in-cluster
-    namespace: currency-exchange-dev
+    namespace: dev_services
   syncPolicy:
     automated: { prune: true, selfHeal: true }
     syncOptions: [ "CreateNamespace=true" ]
