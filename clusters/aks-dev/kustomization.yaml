@@ -41,4 +41,4 @@ patches:
     patch: |
       - op: replace
         path: /spec/destinations/0/namespace
-        value: dev_services
+        value: dev-services

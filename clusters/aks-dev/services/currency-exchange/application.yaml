@@ -17,7 +17,7 @@ spec:
         - values-dev.yaml
   destination:
     name: in-cluster
-    namespace: dev_services
+    namespace: dev-services
   syncPolicy:
     automated: { prune: true, selfHeal: true }
     syncOptions: [ "CreateNamespace=true" ]
