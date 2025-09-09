@@ -43,9 +43,9 @@ spec:
               - "devcluster-kengw.eastus.cloudapp.azure.com"
             path: /grafana
             pathType: Prefix
-            # tls:
-            #   - secretName: grafana-tls
-            #     hosts: [ "devcluster-kengw.eastus.cloudapp.azure.com" ]
+            tls:
+              - secretName: grafana-tls
+                hosts: [ "devcluster-kengw.eastus.cloudapp.azure.com" ]
 
         prometheus:
           ingress:
