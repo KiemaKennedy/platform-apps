@@ -1,6 +1,15 @@
 replicaCount: 3
 image:
-  tag: "0.0.1.RELEASE"       # your CI can bump this
+  tag: "0.0.1.RELEASE"
+
 ingress:
-  host: "devcluster-kengw.eastus.cloudapp.azure.com"
-  path: "/currency-exchange"
+  enabled: true
+  className: nginx                 # <- important
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: "/$2"
+  hosts:
+    - host: ""                     # <- no host, path-only
+      paths:
+        - path: /currency-exchange(/|$)(.*)
+          pathType: Prefix
+  tls: []
