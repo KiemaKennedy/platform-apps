@@ -15,7 +15,6 @@ resources:
 
   # Platform apps
   - ./platform/networking/argocd-ingress/application.yaml
-  - ./platform/cert-manager/application.yaml
   - ./platform/monitoring/application.yaml
 
   # Services
