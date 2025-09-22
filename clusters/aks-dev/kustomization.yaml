@@ -1,7 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  
   # Namespaces
   - ./namespaces/monitoring-namespace.yaml
   - ./namespaces/dev-services.yaml
@@ -19,10 +18,11 @@ resources:
   - ./platform/cert-manager/application.yaml
   - ./platform/monitoring/application.yaml
 
-
-  # Services (can point at prod overlays or prod values)
+  # Services
   - ./services/currency-exchange/application.yaml
+
 patches:
+  # Point service app to dev values
   - target:
       kind: Application
       name: currency-exchange
@@ -31,14 +31,14 @@ patches:
         path: /spec/source/helm/valueFiles/0
         value: values-dev.yaml
 
-  - target: { kind: Ingress, name: argocd, namespace: argocd }
-    patch: |
-      - op: replace
+  # Ensure Argo CD ingress uses nginx class (hostless, path-based)
+  - target:
+      kind: Ingress
+      name: argocd
+      namespace: argocd
+    patch: |-
+      - op: add
+        path: /spec/ingressClassName
+        value: nginx
+      - op: remove
         path: /spec/rules/0/host
-        value: devcluster-kengw.eastus.cloudapp.azure.com
-
-  - target: { kind: AppProject, name: services, namespace: argocd }
-    patch: |
-      - op: replace
-        path: /spec/destinations/0/namespace
-        value: dev-services
