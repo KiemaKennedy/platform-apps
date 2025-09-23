@@ -14,7 +14,7 @@ resources:
   - ./platform/monitoring/secrets/grafana-oidc.secret.yaml
 
   # Platform apps
-  - ./platform/networking/argocd-ingress/ingress.yaml
+  # - ./platform/networking/argocd-ingress/ingress.yaml
   - ./platform/monitoring/application.yaml
 
   # Services
